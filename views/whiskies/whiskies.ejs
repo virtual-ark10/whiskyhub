@@ -1,0 +1,38 @@
+<% layout ('layouts/boilerplate') %>
+
+    <h1 class="text-center mb-4">Big Boss Whiskies</h1>
+    
+        <div class="row">
+            <% for(let whisky of whiskies) { %>
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 mb-3">
+                        <img class="img-fluid card-img-top index-images" src="<%= whisky.image %>" alt="<%= whisky.name %>">
+
+                        <div class="card-body px-4">
+                            <h5 class="card-title"><%= whisky.name %></h5>
+                            <p class="card-text"><%= whisky.type %></p>
+                            <p class="card-text">
+                                <small class="text-muted">$<%= whisky.price %></small>
+                            </p>
+                            <div class="d-grid mb-3">
+                                <a href="/whiskies/<%= whisky._id %>" class="btn btn-primary">View</a>
+                            </div>
+
+                            <% if(currentUser && whisky.user.equals(currentUser._id)) { %>
+                                <div class="d-grid mb-4">
+                                    <a href="/whiskies/<%= whisky._id %>/edit" class="btn btn-secondary">Edit</a>
+                                </div>
+
+                                <form action="/whiskies/<%= whisky._id %>?_method=DELETE" method="post">
+                                    <button class="btn btn-danger w-100">Delete</button>
+                                </form>
+                            <% } %>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            <% } %>
+        </div>
+

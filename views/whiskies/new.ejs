@@ -1,0 +1,77 @@
+<% layout ('layouts/boilerplate') %>
+
+<div class="row mb-3">
+    <h1 class="text-center mb-3">Add Whisky</h1>
+
+    <div class="col-6 offset-3">
+
+        <form action="/whiskies" method="post" novalidate class="validated-form" enctype="multipart/form-data">
+            <div>
+                <label class="form-label"  for="name">Name: </label>
+                <input class="form-control" type="text" id="name" name="whiskies[name]" required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+
+            <br />
+            <div>
+                <label class="form-label"   for="type">Type: </label>
+                <input class="form-control" type="text" id="type" name="whiskies[type]" required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+
+            <br />
+
+            <div>
+                <div>
+                    <label class="form-label"   for="price">Price: </label>
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="price-label">$</span>
+                    <input type="text" class="form-control" placeholder="0.00" aria-label="Price" aria-describedby="price-label" name="whiskies[price]">
+                </div>
+
+            </div>
+
+            <br />
+
+            <div class="mb-3">
+                <label for="image" class="form-label">Image: </label>
+                <input type="text" class="form-control" id="image" name="whiskies[image]">
+            </div>
+            <!-- Image Upload Options -->
+
+            <!-- <div class="mb-3">
+                <label for="image" class="form-label">Multiple files input example</label>
+                <input class="form-control" type="file" id="image" multiple>
+              </div> -->
+            <!-- <input type="file" name="image" multiple> -->
+            <!-- <div>
+                <label class="form-label"   for="image">Image Url: </label>
+                <input class="form-control" type="text" id="image" name="whiskies[image]" required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div> -->
+
+            <br />
+
+            <div class="mb-3">
+                <label class="form-label"  for="description">Description: </label>
+                <input class="form-control" type="text" id="description" name="whiskies[description]" required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+    
+
+        
+            <button type="submit" class="btn btn-primary w-100">Add Whisky</button>
+
+        </form>
+    </div>
+</div>
+
