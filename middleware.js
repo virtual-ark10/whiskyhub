@@ -33,7 +33,7 @@ export const validateWhiskies = (req, res, next) => {
         const msg = error.details.map(el => el.message).join(',')
         throw new ExpressError(msg, 400)
     } else {
-        next()
+        next();
     }
 }
 
@@ -44,7 +44,7 @@ export const isUser = async (req, res, next) => {
         req.flash('error', 'You cannot do that.')
         return res.redirect(`/whiskies/${id}`)
     }
-    next()
+    next();
 }
 
 export const validateReview = (req, res, next) => {

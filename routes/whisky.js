@@ -14,13 +14,13 @@ const upload = multer({storage})
 
 router.route('/')
     .get(catchAsync(whiskies.indexPage))
-    .post(isLoggedIn, validateWhiskies, catchAsync(whiskies.saveWhisky))
+    .post(validateWhiskies, catchAsync(whiskies.saveWhisky))
     // .post(upload.array('image'), (req, res) => {
     //     res.status(200).send({body: req.body, file:req.files})
     //})
 
 
-router.get('/new', isLoggedIn, catchAsync(whiskies.newWhisky))
+router.get('/new', catchAsync(whiskies.newWhisky))
 
 
 router.route('/:id')

@@ -12,9 +12,11 @@ export const newWhisky = async(req, res) => {
 
 export const saveWhisky = async(req, res, next)=> {
     const whisky = new Whisky(req.body.whiskies);
-    whisky.user = req.user._id;
-    await whisky.save();
     console.log(whisky)
+
+    whisky.user = req.user._id;
+    console.log(whisky)
+    await whisky.save();
     req.flash('success', `Successfully added ${whisky.name}`)
     res.redirect(`/whiskies/${whisky._id}`)
 }
@@ -40,8 +42,8 @@ export const renderEditPage = async(req, res) => {
 export const editWhisky = async(req, res) => {
     const {id} = req.params;
     const whisky = await Whisky.findByIdAndUpdate(id, {...req.body.whiskies})
-    const imgs = req.files.map(f => ({url: f.path, filename: f.filename}));
-    whisky.images.push(...imgs);
+    //const imgs = req.files.map(f => ({url: f.path, filename: f.filename}));
+    //whisky.images.push(...imgs);
     await whisky.save();
     res.redirect(`/whiskies/${whisky._id}`)
 }

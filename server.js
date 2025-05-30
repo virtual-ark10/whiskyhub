@@ -4,7 +4,6 @@ if(process.env.NODE_ENV !== "production") {
 }
 
 import express from "express";
-import router from "./routes/whisky.js"
 import mongoose from "mongoose"
 import engine from "ejs-mate";
 import methodOverride from "method-override";
@@ -23,6 +22,8 @@ import { setCurrentUser } from "./middleware.js";
 import ExpressMongoSanitize from 'express-mongo-sanitize';
 import helmet, { contentSecurityPolicy } from 'helmet';
 
+const dbUrl = process.env.DB_URL;
+
 const app = express();
 
 const sessionConfig = {
@@ -39,8 +40,6 @@ const sessionConfig = {
 }
 
 
-
-
 app.set('view engine', 'ejs')
 
 app.engine('ejs', engine)
@@ -54,56 +53,58 @@ app.use(express.static(join(__dirname, 'public')));
 app.use(express.urlencoded({extended: true}))
 app.use(express.json())
 app.use(flash())
-app.use(ExpressMongoSanitize())
-app.use(helmet())
 
-const scriptSrcUrls = [
-    "https://stackpath.bootstrapcdn.com",
-    "https://kit.fontawesome.com",
-    "https://cdnjs.cloudflare.com",
-    "https://cdn.jsdelivr.net",
-];
-const styleSrcUrls = [
-    "https://kit-free.fontawesome.com",
-    "https://stackpath.bootstrapcdn.com",
-    "https://fonts.googleapis.com",
-    "https://use.fontawesome.com",
-    "https://cdn.jsdelivr.net",
-];
-const connectSrcUrls = [
-    "https://api.mapbox.com",
-    "https://*.tiles.mapbox.com",
-    "https://events.mapbox.com",
-];
-const fontSrcUrls = [];
-app.use(
-    helmet.contentSecurityPolicy({
-        directives: {
-            defaultSrc: [],
-            connectSrc: ["'self'", ...connectSrcUrls],
-            scriptSrc: ["'unsafe-inline'", "'self'", ...scriptSrcUrls],
-            styleSrc: ["'self'", "'unsafe-inline'", ...styleSrcUrls],
-            workerSrc: ["'self'", "blob:"],
-            childSrc: ["blob:"],
-            objectSrc: [],
-            imgSrc: [
-                "'self'",
-                "blob:",
-                "data:",
-                "https://res.cloudinary.com/dyc0ieeyu/", //SHOULD MATCH YOUR CLOUDINARY ACCOUNT! 
-                "https://images.unsplash.com",
-                "https://img.thewhiskyexchange.com",
-                "https://www.ardbeg.com/",
-                "https://www.whiskyshop.com/",
-                "https://therarewhiskeyshop.com/",
-                "https://www.redbreastwhiskey.com/",
-                "https://www.masterofmalt.com/",
-                "https://www.vintageliquorkenya.com/",
-            ],
-            fontSrc: ["'self'", ...fontSrcUrls],
-        },
-    })
-);
+
+//app.use(ExpressMongoSanitize())
+//app.use(helmet())
+
+// const scriptSrcUrls = [
+//     "https://stackpath.bootstrapcdn.com",
+//     "https://kit.fontawesome.com",
+//     "https://cdnjs.cloudflare.com",
+//     "https://cdn.jsdelivr.net",
+// ];
+// const styleSrcUrls = [
+//     "https://kit-free.fontawesome.com",
+//     "https://stackpath.bootstrapcdn.com",
+//     "https://fonts.googleapis.com",
+//     "https://use.fontawesome.com",
+//     "https://cdn.jsdelivr.net",
+// ];
+// const connectSrcUrls = [
+//     "https://api.mapbox.com",
+//     "https://*.tiles.mapbox.com",
+//     "https://events.mapbox.com",
+// ];
+// const fontSrcUrls = [];
+// app.use(
+//     helmet.contentSecurityPolicy({
+//         directives: {
+//             defaultSrc: [],
+//             connectSrc: ["'self'", ...connectSrcUrls],
+//             scriptSrc: ["'unsafe-inline'", "'self'", ...scriptSrcUrls],
+//             styleSrc: ["'self'", "'unsafe-inline'", ...styleSrcUrls],
+//             workerSrc: ["'self'", "blob:"],
+//             childSrc: ["blob:"],
+//             objectSrc: [],
+//             imgSrc: [
+//                 "'self'",
+//                 "blob:",
+//                 "data:",
+//                 "https://res.cloudinary.com/dyc0ieeyu/", //SHOULD MATCH YOUR CLOUDINARY ACCOUNT! 
+//                 "https://images.unsplash.com",
+//                 "https://img.thewhiskyexchange.com",
+//                 "https://www.ardbeg.com/",
+//                 "https://www.whiskyshop.com/",
+//                 "https://therarewhiskeyshop.com/",
+//                 "https://www.redbreastwhiskey.com/",
+//                 "https://www.masterofmalt.com/",
+//                 "https://www.vintageliquorkenya.com/",
+//             ],
+//             fontSrc: ["'self'", ...fontSrcUrls],
+//         },
+//     })
+// );
 
 
 app.use(session(sessionConfig))
@@ -135,9 +136,6 @@ app.use('/whiskies', whiskies)
 app.use('/', users)
 
 
-app.get('/', (req, res) => {
-    res.render('home')
-})
 
 app.all('*', (req, res, next) => {
     next(new ExpressError('Page Not Found', 404))
