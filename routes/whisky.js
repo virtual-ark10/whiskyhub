@@ -1,22 +1,17 @@
 import express from "express";
-import mongoose from "mongoose";
-import Whisky from "../models/whisky.js";
 import catchAsync from "../utils/catchAsync.js";
 import { isLoggedIn, validateWhiskies, isUser } from "../middleware.js";
 import whiskies from "../controllers/whiskies.js";
-import multer from "multer";
-import storage from "../cloudinary/index.js"
+
 
 
 const router = express.Router();
 
-const upload = multer({storage})
 
 router.route('/')
     .get(catchAsync(whiskies.indexPage))
     .post(isLoggedIn, isUser, validateWhiskies, catchAsync(whiskies.saveWhisky))
   
-
 
 router.get('/new', isLoggedIn, catchAsync(whiskies.newWhisky))
 
