@@ -3,8 +3,6 @@ import catchAsync from "../utils/catchAsync.js";
 import { isLoggedIn, validateWhiskies, isUser } from "../middleware.js";
 import whiskies from "../controllers/whiskies.js";
 
-
-
 const router = express.Router();
 
 
