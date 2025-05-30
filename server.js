@@ -91,7 +91,6 @@ app.use(flash())
 //                 "'self'",
 //                 "blob:",
 //                 "data:",
-//                 "https://res.cloudinary.com/dyc0ieeyu/", //SHOULD MATCH YOUR CLOUDINARY ACCOUNT! 
 //                 "https://images.unsplash.com",
 //                 "https://img.thewhiskyexchange.com",
 //                 "https://www.ardbeg.com/",
