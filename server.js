@@ -19,6 +19,7 @@ import passport from "passport";
 import LocalStrategy from "passport-local"
 import User from './models/user.js'
 import { setCurrentUser } from "./middleware.js";
+import MongoStore from 'connect-mongo';
 import ExpressMongoSanitize from 'express-mongo-sanitize';
 import helmet, { contentSecurityPolicy } from 'helmet';
 
@@ -26,7 +27,15 @@ const dbUrl = process.env.DB_URL;
 
 const app = express();
 
+const dbSecret = process.env.MONGO_SECRET;
+
+
+
 const sessionConfig = {
+    store: MongoStore.create({
+        mongoUrl: dbUrl,
+        collectionName: 'sessions' 
+    }),
     name: 'session',
     secret: 'secret',
     resave: false,
@@ -122,7 +131,10 @@ app.use((req, res, next) => {
 
 app.use(setCurrentUser)
 
-mongoose.connect('mongodb://localhost:27017/whisky');
+//mongoose.connect('mongodb://localhost:27017/whisky');
+
+mongoose.connect(dbUrl);
+
 
 const db =  mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
