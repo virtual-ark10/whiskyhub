@@ -8,7 +8,7 @@ const router = express.Router();
 
 router.route('/')
     .get(catchAsync(whiskies.indexPage))
-    .post(isLoggedIn, isUser, validateWhiskies, catchAsync(whiskies.saveWhisky))
+    .post(isLoggedIn, validateWhiskies, catchAsync(whiskies.saveWhisky))
   
 
 router.get('/new', isLoggedIn, catchAsync(whiskies.newWhisky))
