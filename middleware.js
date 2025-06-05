@@ -5,8 +5,9 @@ import Review from "./models/reviews.js"
 
 export const isLoggedIn = (req, res, next) => {
     if(!req.isAuthenticated()) {
+        // Store the URL the user was trying to access
         req.session.returnTo = req.originalUrl
-        req.flash('err', 'You must be signed in first!')
+        req.flash('error', 'You must be signed in first!')
         return res.redirect('/login')
     }
 
@@ -19,9 +20,13 @@ export const setCurrentUser = (req, res, next) => {
 }
 
 export const storeReturnTo = (req, res, next) => {
-    if(req.session.returnTo) {
-        res.locals.returnTo = req.session.returnTo;
-    }
+    if(!req.session.returnTo && req.originalUrl !== '/login') { 
+        req.session.returnTo = req.originalUrl;
+    } 
+    
+    res.locals.returnTo = req.session.returnTo;
+
+
 
     next();
 }

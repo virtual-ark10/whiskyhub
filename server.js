@@ -34,16 +34,19 @@ const dbSecret = process.env.MONGO_SECRET;
 const sessionConfig = {
     store: MongoStore.create({
         mongoUrl: dbUrl,
-        collectionName: 'sessions' 
+        collectionName: 'sessions',
+        ttl: 1000 * 60 * 60 * 24 * 7, // 7 days
+        
     }),
     name: 'session',
     secret: 'secret',
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
+    rolling: true,
     cookie: {
         httpOnly: true,
         //secure: true,
-        expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
+        expires: Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
         maxAge: 1000 * 60 * 60 * 24 * 7
     }
 }

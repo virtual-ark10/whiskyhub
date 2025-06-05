@@ -30,8 +30,9 @@ export const renderLogin = (req, res) => {
 export const loginUser = (req, res) => {
     const currentUser = req.user;
     //console.log("Hello "+ currentUser.username);
-    req.flash('success', `Welcome Back, ${currentUser ? currentUser.username : 'Guest'}!`);
     const redirectUrl = req.session.returnTo || '/whiskies'
+    delete req.session.returnTo;
+    req.flash('success', `Welcome Back, ${currentUser ? currentUser.username : 'Guest'}!`);
     res.redirect(redirectUrl);
 }
 

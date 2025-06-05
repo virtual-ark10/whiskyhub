@@ -45,6 +45,7 @@ export const editWhisky = async(req, res) => {
     //const imgs = req.files.map(f => ({url: f.path, filename: f.filename}));
     //whisky.images.push(...imgs);
     await whisky.save();
+    req.flash('success', `Successfully updated ${whisky.name}`)
     res.redirect(`/whiskies/${whisky._id}`)
 }
 
